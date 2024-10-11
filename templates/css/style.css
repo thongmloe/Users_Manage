@@ -1,0 +1,14 @@
+/* Css chỉnh sửa */
+.mg-form {
+  margin-bottom: 10px;
+}
+
+.center-form {
+  margin: 50px auto;
+}
+
+.btn-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
