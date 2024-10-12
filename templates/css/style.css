@@ -7,6 +7,11 @@
   margin: 50px auto;
 }
 
+.mg-btn {
+  width: 70%;
+  margin-top: 10px;
+}
+
 .btn-form {
   display: flex;
   justify-content: center;

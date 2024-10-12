@@ -3,7 +3,11 @@ if(!defined('_CODE')){
     die('Access denied...');   
 }
 
-layouts('header');
+$title = [
+    'titlePage' => 'Đăng nhập tài khoản'
+];
+
+layouts('header',$title);
 
 ?>
 
@@ -20,12 +24,12 @@ layouts('header');
                 <input type="password" name="" id="" placeholder="Mật khẩu" class="form-control">
             </div>
             <div class="btn-form">
-                <button type="submit" class="mg-form btn btn-primary btn-block">Đăng Nhập</button>
+                <button type="submit" class="mg-btn btn btn-primary btn-block">Đăng Nhập</button>
             </div>
             <hr>
             <p class="text-center"><a href="?module=auth&action=forgot">Quên mật khẩu</a></p>
             <div class="btn-form">
-            <a href="?module=auth&action=register" class="btn btn-primary btn-block">Đăng Ký</a>
+            <a href="?module=auth&action=register" class="mg-btn btn btn-primary btn-block">Đăng Ký</a>
             </div>
         </form>
     </div>
