@@ -1,0 +1,44 @@
+Thực hành xây dựng chức năng quản lý người dùng
+
+Phần 1: Xác thực truy cập
+
+- Đăng nhập
+- Đăng ký
+- Đăng xuất
+- Quên mật khẩu
+- Kích hoạt tài khoản
+
+Phần 2: Xây dựng chức năng xung quanh quản lý người dùng
+
+- Kiểm tra người dùng đăng nhập
+- Thêm người dùng
+- Sửa xóa người dùng
+- Hiển thị số lượng người dùng
+- Phân trang
+- Tìm kiếm, lọc dữ liệu
+
+<!-- Thiết kế database -->
+
+- Bảng user:
+
+* id primary key auto_inc int
+* fullname varchar(100)
+* email varchar(100)
+* phone varchar(20)
+* pass varchar(50)
+* forgotToken varchar(100)
+* activeToken varchar(100)
+* create_at datetime
+* update_at datetim
+
+- Bảng LoginToken
+
+* id - primary key auto_inc int
+* user_Id int foren key (user)
+* token varchar(100)
+* create_at datetime
+
+- Code chức năng đăng ký
+- Đăng ký (Kiểm tra và insert dữ liệu vào database)
+- Gửi mã kích hoạt về cho gmail của khách hàng
+- Kiểm tra tài khoản đã được kích hoạt hay chưa

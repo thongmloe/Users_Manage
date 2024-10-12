@@ -17,11 +17,11 @@ layouts('header',$title);
         <form action="" method="post">
             <div class="form-group mg-form">
                 <label for="">Email</label>
-                <input type="email" name="" id="" placeholder="Địa chỉ email" class="form-control">
+                <input type="email" name="email" id="" placeholder="Địa chỉ email" class="form-control">
             </div>
             <div class="form-group mg-form">
                 <label for="">Mật Khẩu</label>
-                <input type="password" name="" id="" placeholder="Mật khẩu" class="form-control">
+                <input type="password" name="password" id="" placeholder="Mật khẩu" class="form-control">
             </div>
             <div class="btn-form">
                 <button type="submit" class="mg-btn btn btn-primary btn-block">Đăng Nhập</button>
