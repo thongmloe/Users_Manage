@@ -25,6 +25,7 @@ function sendMail($toEmail,$subject,$body){
         //Server settings
         $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
         $mail->isSMTP();                                            //Send using SMTP
+        $mail->CharSet = 'UTF-8';                                 //Chỉnh sửa thành tiếng việt
         $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
         $mail->Username   = 'hobadong7777777@gmail.com';                     //SMTP username
@@ -32,6 +33,15 @@ function sendMail($toEmail,$subject,$body){
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
         $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
     
+        // Bảo mật SSL của phpmailer
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
+        
         //Recipients
         $mail->setFrom('hoanggvannthongg@gmail.com', 'ThongLoe');
         $mail->addAddress($toEmail);     //Add a recipient
@@ -42,8 +52,11 @@ function sendMail($toEmail,$subject,$body){
         $mail->Subject = $subject;
         $mail->Body    = $body;
     
-        $mail->send();
-        echo 'Gửi thành công';
+        $sendMail = $mail->send();
+        if($sendMail){
+            return $sendMail;
+        }
+
     } catch (Exception $e) {
         echo "Gửi thất bại: {$mail->ErrorInfo}";
     }
@@ -126,13 +139,41 @@ function isPhone($phone){
         $checkZero = true;
         $phone = substr($phone,1);
     }
-    // Điều kiện 2: Kiểm tra chuỗi số bên sau đủ 9 chữ số
+    // Điều kiện 2: Kiểm tra đầu số điện thoại ở VN: 03,05,07,08,09
+    $checkNumBegin = false;
+    $validStarts = ['3', '5', '7', '8', '9'];
+    if (in_array($phone[0], $validStarts)) {
+        $checkNumBegin = true;
+    }
+    // Điều kiện 3: Kiểm tra chuỗi số bên sau đủ 8 chữ số
     $checkNumber = false;
     if(isNumberInt($phone) && (strlen($phone) == 9)){
         $checkNumber = true;
     }
-    if($checkNumber && $checkZero){
+    if($checkNumber && $checkZero && $checkNumBegin){
         return true;
     }
     return false;
+}
+
+// Thông báo lỗi
+function getSmg($smg, $type = 'success'){
+    echo '<div class = "alert alert-'.$type.'">';
+    echo $smg;
+    echo '</div>';
+}
+
+// Hàm điều hướng để load lại trang
+function redirect($path='index.php'){
+    header("Location: $path");
+    exit;
+}
+
+// Hàm thông báo lỗi
+function formError($fileName,$errors,$beforeHtml='',$afterHtml='',$default){
+    return (!empty($errors[$fileName])) ? '<span class="error">'.reset($errors[$fileName]).'</span>' : $default;
+}
+// Hàm hiển thị lại dữ liệu cũ
+function old($fileName,$oldData,$default){
+    return (!empty($oldData[$fileName])) ? $oldData[$fileName] : $default;
 }
