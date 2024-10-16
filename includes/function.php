@@ -11,7 +11,7 @@ use PHPMailer\PHPMailer\Exception;
 // Hàm gọi header và footer
 function layouts($layoutName = 'header',$data=[]){
     if(file_exists(_WEB_PATH_TEMPLATES."/layout/$layoutName.php")){
-        require_once (_WEB_PATH_TEMPLATES."/layout/header.php");
+        require_once (_WEB_PATH_TEMPLATES."/layout/$layoutName.php");
     }
 }
 
@@ -157,9 +157,9 @@ function isPhone($phone){
 }
 
 // Thông báo lỗi
-function getSmg($smg, $type = 'success'){
+function getMsg($Msg, $type = 'success'){
     echo '<div class = "alert alert-'.$type.'">';
-    echo $smg;
+    echo $Msg;
     echo '</div>';
 }
 
@@ -176,4 +176,22 @@ function formError($fileName,$errors,$beforeHtml='',$afterHtml='',$default){
 // Hàm hiển thị lại dữ liệu cũ
 function old($fileName,$oldData,$default){
     return (!empty($oldData[$fileName])) ? $oldData[$fileName] : $default;
+}
+
+// Hàm kiểm tra loginToken
+function isLogin(){
+    $checkLogin = false;
+    if(getSession('loginToken')){
+        $tokenLogin = getSession('loginToken');
+        
+        // Kiểm tra token có giống ở database không
+        $queryToken = oneRaw("SELECT user_Id FROM logintoken WHERE token = '$tokenLogin'");
+        if(!empty($queryToken)){
+            $checkLogin = true;
+        }
+        else{
+            deleteSession('loginToken');
+        }
+    }
+    return $checkLogin;
 }

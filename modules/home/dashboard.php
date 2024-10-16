@@ -2,9 +2,21 @@
 if(!defined('_CODE')){
     die('Access denied...');
 }
-require_once(_WEB_PATH_TEMPLATES."/layout/header.php");
+$title = [
+    'titlePage' => 'Trang Dashboard'
+];
+
+layouts('header',$title);
+
+// echo getSession('loginToken');
+
+if(!isLogin()){
+    redirect('?module=auth&action=login');
+}
+
 ?>
 <h1>Dashboard</h1>
 <?php
-require_once(_WEB_PATH_TEMPLATES."/layout/footer.php");
+layouts('footer');
+
 ?>

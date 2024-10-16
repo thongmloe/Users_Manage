@@ -3,6 +3,12 @@
 if(!defined('_CODE')){
     die('Access denied...');
 }
+
+$title = [
+    'titlePage' => 'Đăng ký tài khoản'
+];
+
+layouts('header-login',$title);
  
 if(isPost()){
     $filterAll = filter();
@@ -74,7 +80,7 @@ if(isPost()){
         $insertStatus = insert('users',$dataInsert);
         if($insertStatus){
             // Tạo link kích hoạt mail
-            $linkActive = _WEB_HOST .'/?module&action=active&token='.$activeToken;
+            $linkActive = _WEB_HOST .'/?module=auth&action=active&token='.$activeToken;
             // Thiết lập gửi email
             $subject = 'Vui lòng kích hoạt tài khoản ';
             $content = 'Chào '.$filterAll['fullname'].'<br>';
@@ -84,46 +90,42 @@ if(isPost()){
             // Tiến hành gửi mail
             $sendMail = sendMail($filterAll['email'],$subject,$content);
             if($sendMail){
-                setFlashData('smg','Đăng ký thành công, vui lòng kiểm tra Email để kích hoạt tài khoản');
-                setFlashData('smg_type','success');
+                setFlashData('msg','Đăng ký thành công, vui lòng kiểm tra Email để kích hoạt tài khoản');
+                setFlashData('msg_type','success');
             }else{
-                setFlashData('smg','Hệ thống đang gặp sự cố vui lòng thử lại sau !!!');
-                setFlashData('smg_type','danger');
+                setFlashData('msg','Hệ thống đang gặp sự cố vui lòng thử lại sau !!!');
+                setFlashData('msg_type','danger');
             }
         }
         else{
-            setFlashData('smg','Đăng ký không thành công');
-            setFlashData('smg_type','danger');
+            setFlashData('msg','Đăng ký không thành công');
+            setFlashData('msg_type','danger');
         }
         redirect('?module=auth&action=register');
     }
     else{
-        setFlashData('smg','Vui lòng kiểm tra dữ liệu!!!');
-        setFlashData('smg_type','danger');
+        setFlashData('msg','Vui lòng kiểm tra dữ liệu!!!');
+        setFlashData('msg_type','danger');
         setFlashData('errors',$errors);
         setFlashData('old',$filterAll);
         redirect('?module=auth&action=register');
     }
 }
 
-$smg = getFlashData('smg');
-$smg_type = getFlashData('smg_type');
+$msg = getFlashData('msg');
+$msg_type = getFlashData('msg_type');
 $errors = getFlashData('errors');
 $old = getFlashData('old'); 
 
-$title = [
-    'titlePage' => 'Đăng ký tài khoản'
-];
 
-layouts('header',$title);
 ?>
 
 <div class="row">
     <div class="col-4 center-form" >
         <h2 class="text-center text-uppercase fs-4">Đăng ký tài khoản User</h2>
         <?php
-            if(!empty($smg)){
-                getSmg($smg,$smg_type);
+            if(!empty($msg)){
+                getMsg($msg,$msg_type);
             }
         ?>
         <form action="" method="post">
@@ -174,5 +176,5 @@ layouts('header',$title);
 </div>
 
 <?php
-    layouts('footer')
+    layouts('footer-login')
 ?>

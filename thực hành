@@ -42,3 +42,15 @@ Phần 2: Xây dựng chức năng xung quanh quản lý người dùng
 - Đăng ký (Kiểm tra và insert dữ liệu vào database)
 - Gửi mã kích hoạt về cho gmail của khách hàng
 - Kiểm tra tài khoản đã được kích hoạt hay chưa
+
+- Code chức năng đăng nhập
+- Kiểm tra phương thức post lấy dữ liệu nhập vào
+- Kiểm tra dữ liệu nhập vào và dữ liệu lấy ra ở database
+- Tạo LoginToken và thêm vào database
+- Thêm LoginToken vào session rồi chuyển hướng sang trang dashboard
+
+- Code tính năng quên mật khẩu
+- Tạo ra forgot token
+- Gửi email chứa link đến trang reset
+- Xác thực token, hiện ra form reset password
+- Submit reset password -> xử lý -> update lại mật khẩu
